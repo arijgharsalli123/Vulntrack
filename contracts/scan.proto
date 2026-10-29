@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package vulntrack.scan.v1;
+
+option java_multiple_files = true;
+option java_package = "tn.vulntrack.scan.v1";
+option java_outer_classname = "ScanProto";
+
+service ScanService {
+  // Unary: start a scan on an asset
+  rpc StartScan(StartScanRequest) returns (StartScanResponse);
+  // Unary: check the state of a scan
+  rpc GetScanStatus(GetScanStatusRequest) returns (GetScanStatusResponse);
+  // Server streaming: findings are sent one by one while the scan runs
+  rpc StreamFindings(StreamFindingsRequest) returns (stream Finding);
+}
+
+enum Severity {
+  SEVERITY_UNSPECIFIED = 0;
+  LOW = 1;
+  MEDIUM = 2;
+  HIGH = 3;
+  CRITICAL = 4;
+}
+
+enum ScanStatus {
+  SCAN_STATUS_UNSPECIFIED = 0;
+  RUNNING = 1;
+  COMPLETED = 2;
+  FAILED = 3;
+}
+
+message StartScanRequest {
+  string asset_id = 1;
+  string asset_name = 2;
+  string asset_type = 3;
+}
+
+message StartScanResponse {
+  string scan_id = 1;
+  ScanStatus status = 2;
+}
+
+message GetScanStatusRequest {
+  string scan_id = 1;
+}
+
+message GetScanStatusResponse {
+  string scan_id = 1;
+  ScanStatus status = 2;
+  int32 findings_count = 3;
+}
+
+message StreamFindingsRequest {
+  string scan_id = 1;
+}
+
+message Finding {
+  string cve_id = 1;
+  string title = 2;
+  string description = 3;
+  Severity severity = 4;
+}
