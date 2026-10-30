@@ -1,0 +1,74 @@
+
+services:
+  asset-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${ASSET_DB_NAME}
+    volumes:
+      - asset-db-data:/var/lib/postgresql/data
+    networks: [vulntrack-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${ASSET_DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  vuln-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${VULN_DB_NAME}
+    volumes:
+      - vuln-db-data:/var/lib/postgresql/data
+    networks: [vulntrack-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${VULN_DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  report-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${REPORT_DB_NAME}
+    volumes:
+      - report-db-data:/var/lib/postgresql/data
+    networks: [vulntrack-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${REPORT_DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  asset-service:
+    build: ./asset-service
+    environment:
+      ASSET_DB_HOST: asset-db
+      ASSET_DB_NAME: ${ASSET_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8083:8083"
+    depends_on:
+      asset-db:
+        condition: service_healthy
+    networks: [vulntrack-net]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8083/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 40s
+
+networks:
+  vulntrack-net:
+
+volumes:
+  asset-db-data:
+  vuln-db-data:
+  report-db-data:
