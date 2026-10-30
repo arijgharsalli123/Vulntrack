@@ -1,0 +1,20 @@
+
+server:
+  port: 8085
+
+spring:
+  application:
+    name: ticketing-service
+  datasource:
+    url: jdbc:h2:file:${TICKETING_DB_PATH:./data/ticketing}
+    username: ${TICKETING_DB_USER:sa}
+    password: ${TICKETING_DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

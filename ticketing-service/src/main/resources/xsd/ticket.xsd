@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://vulntrack.tn/ticketing"
+           targetNamespace="http://vulntrack.tn/ticketing"
+           elementFormDefault="qualified">
+
+  <!-- Types simples -->
+  <xs:simpleType name="Severity">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LOW"/>
+      <xs:enumeration value="MEDIUM"/>
+      <xs:enumeration value="HIGH"/>
+      <xs:enumeration value="CRITICAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TicketStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OPEN"/>
+      <xs:enumeration value="IN_PROGRESS"/>
+      <xs:enumeration value="CLOSED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Opération createTicket -->
+  <xs:element name="CreateTicketRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="vulnerabilityId" type="xs:string"/>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="severity" type="tns:Severity"/>
+        <xs:element name="assetName" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CreateTicketResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ticketId" type="xs:string"/>
+        <xs:element name="status" type="tns:TicketStatus"/>
+        <xs:element name="createdAt" type="xs:dateTime"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Opération getTicketStatus -->
+  <xs:element name="GetTicketStatusRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ticketId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetTicketStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ticketId" type="xs:string"/>
+        <xs:element name="status" type="tns:TicketStatus"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Détail des SOAP Fault (InvalidSeverity, TicketNotFound) -->
+  <xs:element name="TicketFaultDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="code" type="xs:string"/>
+        <xs:element name="message" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

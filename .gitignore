@@ -7,3 +7,5 @@ target/
 .DS_Store
 .env
 *.mv.db
+# Local H2 database files
+ticketing-service/data/
