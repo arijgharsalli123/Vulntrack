@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:t="http://vulntrack.tn/ticketing">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <t:CreateTicketRequest>
+      <t:vulnerabilityId>vuln-001</t:vulnerabilityId>
+      <t:title>Critical flaw on web-server-01</t:title>
+      <t:severity>CRITICAL</t:severity>
+      <t:assetName>web-server-01</t:assetName>
+    </t:CreateTicketRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

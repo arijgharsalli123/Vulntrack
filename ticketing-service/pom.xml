@@ -67,6 +67,10 @@
 			<artifactId>spring-boot-starter-webservices-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -91,7 +95,7 @@
 					<schemaIncludes>
 						<include>*.xsd</include>
 					</schemaIncludes>
-					<generatePackage>tn.vulntrack.ticketing.gen</generatePackage>
+					<generatePackage>tn.vulntrack.ticketing_service.gen</generatePackage>
 				</configuration>
 			</plugin>
 		</plugins>
