@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:tns="http://vulntrack.tn/ticketing">
-
-    <soapenv:Header/>
-
-    <soapenv:Body>
-        <tns:GetTicketStatusRequest>
-            <tns:ticketId>TCK-ac4d3a33-9b81-469c-bba8-21d9abfd8b50</tns:ticketId>
-        </tns:GetTicketStatusRequest>
-    </soapenv:Body>
-
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:t="http://vulntrack.tn/ticketing">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <t:GetTicketStatusRequest>
+      <t:ticketId>REPLACE-WITH-A-REAL-TICKET-ID</t:ticketId>
+    </t:GetTicketStatusRequest>
+  </soapenv:Body>
 </soapenv:Envelope>

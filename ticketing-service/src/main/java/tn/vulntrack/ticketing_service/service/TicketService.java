@@ -3,6 +3,8 @@ package tn.vulntrack.ticketing_service.service;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+
+import tn.vulntrack.ticketing_service.exception.TicketNotFoundException;
 import tn.vulntrack.ticketing_service.model.Ticket;
 import tn.vulntrack.ticketing_service.repository.TicketRepository;
 
@@ -26,4 +28,8 @@ public class TicketService {
         ticket.setCreatedAt(OffsetDateTime.now());
         return repository.save(ticket);
     }
+    public Ticket getById(String ticketId) {
+    return repository.findById(ticketId)
+            .orElseThrow(() -> new TicketNotFoundException(ticketId));
+}
 }

@@ -12,6 +12,8 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import tn.vulntrack.ticketing_service.gen.CreateTicketRequest;
 import tn.vulntrack.ticketing_service.gen.CreateTicketResponse;
+import tn.vulntrack.ticketing_service.gen.GetTicketStatusRequest;
+import tn.vulntrack.ticketing_service.gen.GetTicketStatusResponse;
 import tn.vulntrack.ticketing_service.gen.TicketStatus;
 //import java.util.GregorianCalendar;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -45,6 +47,16 @@ public class TicketEndpoint {
         response.setStatus(TicketStatus.fromValue(ticket.getStatus()));
         response.setCreatedAt(DatatypeFactory.newInstance().newXMLGregorianCalendar(
                 GregorianCalendar.from(ticket.getCreatedAt().toZonedDateTime())));
+        return response;
+    }
+    @PayloadRoot(namespace = NAMESPACE, localPart = "GetTicketStatusRequest")
+    @ResponsePayload
+    public GetTicketStatusResponse getTicketStatus(@RequestPayload GetTicketStatusRequest request) {
+        Ticket ticket = ticketService.getById(request.getTicketId());
+
+        GetTicketStatusResponse response = new GetTicketStatusResponse();
+        response.setTicketId(ticket.getTicketId());
+        response.setStatus(TicketStatus.fromValue(ticket.getStatus()));
         return response;
     }
 }
