@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 
+import tn.vulntrack.ticketing_service.exception.InvalidSeverityException;
 import tn.vulntrack.ticketing_service.exception.TicketNotFoundException;
 import tn.vulntrack.ticketing_service.model.Ticket;
 import tn.vulntrack.ticketing_service.repository.TicketRepository;
@@ -18,6 +19,9 @@ public class TicketService {
     }
 
     public Ticket create(String vulnerabilityId, String title, String severity, String assetName) {
+        if (!"HIGH".equals(severity) && !"CRITICAL".equals(severity)) {
+         throw new InvalidSeverityException(severity);
+        }        
         Ticket ticket = new Ticket();
         ticket.setTicketId("TCK-" + UUID.randomUUID());
         ticket.setVulnerabilityId(vulnerabilityId);

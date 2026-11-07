@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
+import org.springframework.ws.soap.server.endpoint.SoapFaultAnnotationExceptionResolver;
+import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
@@ -36,5 +38,15 @@ public class WebServiceConfig {
     @Bean
     public XsdSchema ticketsSchema() {
         return new SimpleXsdSchema(new ClassPathResource("xsd/ticket.xsd"));
+    }
+    @Bean
+    public SoapFaultAnnotationExceptionResolver exceptionResolver() {
+        SoapFaultAnnotationExceptionResolver resolver = new SoapFaultAnnotationExceptionResolver();
+        SoapFaultDefinition defaultFault = new SoapFaultDefinition();
+        defaultFault.setFaultCode(SoapFaultDefinition.SERVER);
+        defaultFault.setFaultStringOrReason("Internal server error");
+        resolver.setDefaultFault(defaultFault);
+        resolver.setOrder(1);
+        return resolver;
     }
 }
