@@ -64,7 +64,21 @@ services:
       timeout: 3s
       retries: 10
       start_period: 40s
-
+  ticketing-service:
+    build: ./ticketing-service
+    environment:
+      TICKETING_DB_PATH: /data/ticketing
+    ports:
+      - "8085:8085"
+    volumes:
+      - ticketing-data:/data
+    networks: [vulntrack-net]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8085/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 40s
 networks:
   vulntrack-net:
 
@@ -72,3 +86,4 @@ volumes:
   asset-db-data:
   vuln-db-data:
   report-db-data:
+  ticketing-data:
