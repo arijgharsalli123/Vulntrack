@@ -36,11 +36,12 @@ public class TicketEndpoint {
     @ResponsePayload
     public CreateTicketResponse createTicket(@RequestPayload CreateTicketRequest request)
             throws DatatypeConfigurationException {
-        Ticket ticket = ticketService.create(
-                request.getVulnerabilityId(),
-                request.getTitle(),
-                request.getSeverity().value(),
-                request.getAssetName());
+      String severity = request.getSeverity() == null ? null : request.getSeverity().value();
+     Ticket ticket = ticketService.create(
+        request.getVulnerabilityId(),
+        request.getTitle(),
+        severity,
+        request.getAssetName());
 
         CreateTicketResponse response = new CreateTicketResponse();
         response.setTicketId(ticket.getTicketId());
