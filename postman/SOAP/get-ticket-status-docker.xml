@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:t="http://vulntrack.tn/ticketing">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <t:GetTicketStatusRequest>
+      <t:ticketId>TCK-09882a08-9c10-49e2-96bc-139e81d54028</t:ticketId>
+    </t:GetTicketStatusRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
