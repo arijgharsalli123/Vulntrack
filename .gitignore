@@ -9,3 +9,4 @@ target/
 *.mv.db
 # Local H2 database files
 ticketing-service/data/
+scan-service/data/

@@ -1,0 +1,32 @@
+
+server:
+  port: 8084
+
+spring:
+  application:
+    name: scan-service
+
+  grpc:
+    server:
+      port: 9090
+
+  datasource:
+    url: jdbc:h2:file:${SCAN_DB_PATH:./data/scan}
+    username: ${SCAN_DB_USER:sa}
+    password: ${SCAN_DB_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  endpoint:
+    health:
+      probes:
+        enabled: true
