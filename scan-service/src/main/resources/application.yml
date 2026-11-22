@@ -30,3 +30,9 @@ management:
     health:
       probes:
         enabled: true
+
+
+# noinspection SpringBootApplicationYaml
+scan:
+  findings:
+    delay-ms: ${SCAN_FINDINGS_DELAY_MS:500}
