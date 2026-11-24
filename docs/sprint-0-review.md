@@ -31,7 +31,7 @@
 
 **What slowed me down**
 
-une version de Spring Boot introuvable, une erreur Docker
+une version de Spring Boot introuvable(3.3.x), une erreur Docker
 
 **One improvement for Sprint 1**
 - Log the time spent after each work session in `docs/time-log.md`, so the November 6 checkpoint is based on real numbers.
