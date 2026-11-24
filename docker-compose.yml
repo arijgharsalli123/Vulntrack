@@ -79,6 +79,23 @@ services:
       timeout: 3s
       retries: 10
       start_period: 40s
+  scan-service:
+      build: ./scan-service
+      environment:
+        SCAN_DB_PATH: /data/scan
+      ports:
+        - "9090:9090"
+        - "8084:8084"
+      volumes:
+        - scan-data:/data
+      networks: [vulntrack-net]
+      healthcheck:
+        test: ["CMD-SHELL", "wget -qO- http://localhost:8084/actuator/health || exit 1"]
+        interval: 10s
+        timeout: 3s
+        retries: 10
+        start_period: 40s
+
 networks:
   vulntrack-net:
 
@@ -87,3 +104,4 @@ volumes:
   vuln-db-data:
   report-db-data:
   ticketing-data:
+  scan-data:
